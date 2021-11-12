@@ -39,10 +39,12 @@ public class ListaCircularConsumos {
             if(false) {
 
             } else {
-                NodoSimple aux= entrada;
+                NodoSimple aux = entrada;
                 while (aux.getSiguiente() != entrada) {
                     aux=aux.getSiguiente();
                 }
+                aux.setSiguiente(entrada.getSiguiente());
+                entrada = entrada.getSiguiente();
             }
         }
     }

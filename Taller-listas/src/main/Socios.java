@@ -13,9 +13,10 @@ public class Socios {
     private ListaDoblePersonas personaAutorizadas;
     private ListaCircularConsumos facturas;
 
-    public Socios(String nombre, String cedula, String tipoSuscripcion) {
+    public Socios(String nombre, String cedula, String tipoSuscripcion,double fondos) {
         this.nombre = nombre;
         this.cedula = cedula;
+        this.fondos = fondos;
         this.tipoSuscripcion = tipoSuscripcion;
         
         this.facturas = new ListaCircularConsumos();

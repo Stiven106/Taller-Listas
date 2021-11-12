@@ -33,41 +33,35 @@ public class ListaSimpleSocios {
     }
     
     public NodoSimple buscarCedula(String cedula) {
-        System.out.println("entro en ListaSimpleSocios");
         NodoSimple aux = null;
         NodoSimple encontrado = null;
 
         //Miramos que la lista no este vacia:
         if (!listaVacia()) {
-            System.out.println("entro en ListaSimpleSocios: !listaVacia");
             //Comparamos que el socio del inicio no sea el repetido:
             if (inicio.getSocio().getCedula().equals(cedula)) {
-                System.out.println("entro en ListaSimpleSocios: !listaVacia:if(encontrado=inicio)");
                 encontrado = inicio;
             } else {
-            System.out.println("entro en ListaSimpleSocios: else");
                 //Si el socio del inicio no es igual a la cedula repetida, entonces que se ejecute este else
                 //Decimos que aux va a ser igual a el siguiente socio de la lista
                 if(inicio.getSiguiente() != null) {
                     aux = inicio.getSiguiente();
-                    while (aux != inicio ) {
-                        System.out.println("entro en ListaSimpleSocios: while");
-
+                    while (aux!=null && aux != inicio ) {
                         if (aux.getSocio().getCedula().equals(cedula)) {
-                            System.out.println("entro en ListaSimpleSocios: if (encontrado)");
                             encontrado = aux;
-                            break;
+                            return encontrado;
+                        } else {
+                            aux = aux.getSiguiente();
                         }
-                        aux = aux.getSiguiente();
                 }
                 }
                  //Mientras que aux sea diferente del inicio, lo cual es true, entonces va ir recorriendo todos los socios hasta encontrar el repetido o finalizar.
                     
             }
         }
-        System.out.println("Saliendo de ListaSimpleSocios");
         return encontrado;
     }
+
 
     public void insertarAlInicio(Socios socio) {
         NodoSimple nuevo =  new NodoSimple(socio);
@@ -75,10 +69,8 @@ public class ListaSimpleSocios {
             inicio = nuevo;
             fin = nuevo;
         } else {
-            System.out.println("ingresando 2do dato");
             nuevo.setSiguiente(inicio);
             inicio=nuevo;
-            System.out.println("2do dato ingresado, saliendo de metodo insertarAlInicio ");
         }
     }
 

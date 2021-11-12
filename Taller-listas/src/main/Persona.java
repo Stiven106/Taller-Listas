@@ -6,15 +6,26 @@ public class Persona {
     
     private String nombre;
     private String cedula;
+    private String cedulaSocioAfiliado;
     private ListaCircularConsumos facturas;
 
     public Persona() {
     }
 
-    public Persona(String cedula, String nombre) {
+    public Persona(String cedula, String nombre, String cedulaSocioAfiliado) {
         this.cedula = cedula;
         this.nombre = nombre;
+        this.cedulaSocioAfiliado = cedulaSocioAfiliado;
         this.facturas = new ListaCircularConsumos();
+    }
+
+    
+    public String getCedulaSocioAfiliado() {
+        return cedulaSocioAfiliado;
+    }
+
+    public void setCedulaSocioAfiliado(String cedulaSocioAfiliado) {
+        this.cedulaSocioAfiliado = cedulaSocioAfiliado;
     }
 
     public ListaCircularConsumos getFacturas() {
