@@ -19,12 +19,12 @@ public class Club {
         //Datos basicos del consumo
         String cedula =  JOptionPane.showInputDialog("Ingrese la cedula del socio o persona para realizar el consumo.");
         String concepto =  JOptionPane.showInputDialog("Por favor ingrese el concepto del consumo.");
-        double valor =  Double.parseDouble(JOptionPane.showInputDialog("Por favor ingrese el valor del consumo a realizar."));
+        double factura =  Double.parseDouble(JOptionPane.showInputDialog("Por favor ingrese el valor del consumo a realizar."));
 
         //Variables nulas para trabajar
         String cedulaEncontrada = null;
         String nombreEncontrado = null;
-        double fondosEncontrados = 000.000;
+        double fondosEncontrados = 0.0;
 
         //Ingresar datos dependiendo si es persona o socio el que realiza el consumo
         if (buscarCedula(cedula) != null) {
@@ -38,8 +38,8 @@ public class Club {
         } 
 
         //Validar que hayan fondos para hacer el consumo.
-        if (valor >= fondosEncontrados) {
-            Consumos consumo = new Consumos(concepto, valor, cedulaEncontrada, nombreEncontrado);
+        if (factura <= fondosEncontrados) {
+            Consumos consumo = new Consumos(concepto, factura, cedulaEncontrada, nombreEncontrado);
             consumos.insertarAlInicio(consumo);
             JOptionPane.showMessageDialog(null, "El consumo del afiliado con nombre:  '" + nombreEncontrado + "'' ha sido realizado con exito!!.");
         } else {
@@ -71,7 +71,7 @@ public class Club {
         }
 
         //Ingreso de fondos segun la opcion elegida (vip o regular)
-        double fondos = 000.000;
+        double fondos = 0.0;
 
         if (tipoSuscripcion == "VIP") {
             fondos = Double.parseDouble(JOptionPane.showInputDialog("Por favor ingrese fondos *obligatorio* \n Recuerde: \n"+
@@ -163,10 +163,22 @@ public class Club {
 
     public void eliminarSocio () {
 
-        
+        Socios socio = null;
 
+        String cedula =  JOptionPane.showInputDialog("Ingrese la cedula del socio que quiere eliminar del sistema.");
 
-
+        if (buscarCedula(cedula) != null) {
+            socio = buscarCedula(cedula);
+            if(socio.getTipoSuscripcion() == "VIP") {
+                JOptionPane.showMessageDialog(null, "El socio que esta intentando eliminar es VIP, por tanto esta eliminacion no es posible.");
+            } else if ( socio.getTipoSuscripcion() == "Regular") {
+                if(consumos.listaVacia()) {
+                    socios.eliminar(socio);
+                }
+            } else {
+                JOptionPane.showMessageDialog(null, "No se encontro el socio que desea eliminar. Por favor verique que la cedula ingresada sea la correcta.");
+            }
+        } 
 
     }
 

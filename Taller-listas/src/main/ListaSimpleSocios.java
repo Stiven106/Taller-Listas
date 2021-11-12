@@ -31,6 +31,7 @@ public class ListaSimpleSocios {
     public boolean listaVacia()  {
         return inicio==null;
     }
+
     
     public NodoSimple buscarCedula(String cedula) {
         NodoSimple aux = null;
@@ -55,8 +56,6 @@ public class ListaSimpleSocios {
                         }
                 }
                 }
-                 //Mientras que aux sea diferente del inicio, lo cual es true, entonces va ir recorriendo todos los socios hasta encontrar el repetido o finalizar.
-                    
             }
         }
         return encontrado;
@@ -83,37 +82,6 @@ public class ListaSimpleSocios {
             fin.setSiguiente(inicio);
             fin=nuevo;
         }
-    }
-
-
-
-
-
-
-
-
-    /*
-    // Video profe
-
-    
-
-    //Insertar
-
-    
-
-    
-
-    //Mostrar el contenido
-
-    public String mostrar() {
-        String contenido = "";
-        NodoSimple aux=inicio;
-
-        while(aux!=null) {
-            contenido += (aux.getDato() + " ---> ");
-        }
-        contenido+= "null";
-        return contenido;
     }
 
     //Eliminar
@@ -144,16 +112,16 @@ public class ListaSimpleSocios {
         }
     }
 
-    public void eliminar (int dato) {
+    public void eliminar (Socios socio) {
         if(!listaVacia()) {
-            if(dato == inicio.getDato()) {
+            if(socio == inicio.getSocio()) {
                 eliminarDelInicio();
-            } else if (dato==fin.getDato()) {
+            } else if (socio==fin.getSocio()) {
                 eliminarDelFinal();
             } else {
                 NodoSimple aux = inicio;
 
-                while(aux.getSiguiente() != null && aux.getSiguiente().getDato()!=dato) {
+                while(aux.getSiguiente() != null && aux.getSiguiente().getSocio()!=socio) {
                     aux=aux.getSiguiente();
                 }
                 if(aux!=fin) {
@@ -166,7 +134,21 @@ public class ListaSimpleSocios {
         }
     }
 
-    */
+    /*
 
+    //Mostrar el contenido
+
+    public String mostrar() {
+        String contenido = "";
+        NodoSimple aux=inicio;
+
+        while(aux!=null) {
+            contenido += (aux.getDato() + " ---> ");
+        }
+        contenido+= "null";
+        return contenido;
+    }
+
+    */
     
 }
