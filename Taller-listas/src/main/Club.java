@@ -161,12 +161,20 @@ public class Club {
         return encontrado;
     }
 
+    public String mostrarTodosConsumos () {
+        String cedula =  JOptionPane.showInputDialog("Ingrese la cedula del socio/persona que quiere consultar por facturas pendientes.");
+        int numFacturasPendientes = consumos.buscarConsumos(cedula);
+        if (numFacturasPendientes >= 1 ) {
+            JOptionPane.showMessageDialog(null, "El total de facturas pendientes es: " + numFacturasPendientes);
+        } else {
+            JOptionPane.showMessageDialog(null, "El socio al cual realizo la busqueda no cuenta con consumos realizados.");
+        }
+        return cedula;
+    }
+
     public void eliminarSocio () {
-
         Socios socio = null;
-
         String cedula =  JOptionPane.showInputDialog("Ingrese la cedula del socio que quiere eliminar del sistema.");
-
         if (buscarCedula(cedula) != null) {
             socio = buscarCedula(cedula);
             if(socio.getTipoSuscripcion() == "VIP") {
@@ -179,9 +187,16 @@ public class Club {
                 JOptionPane.showMessageDialog(null, "No se encontro el socio que desea eliminar. Por favor verique que la cedula ingresada sea la correcta.");
             }
         } 
-
     }
 
-    
+    public void eliminarConsumo () {
+        //Mostrar consumos por cedula
+        String cedula = mostrarTodosConsumos();
+        consumos.buscarConsumos(cedula);
+
+        //Empezamos a construir el metodo para eliminar consumo
+        String concepto =JOptionPane.showInputDialog("Ingrese el concepto de la factura que desee eliminar.");
+       consumos.eliminar(cedula, concepto);
+    }
 
 }

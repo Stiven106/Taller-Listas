@@ -18,12 +18,12 @@ public class ppl {
                     + "6. Para eliminar un socio\n"
                     + "7. para ver cantidad de consumos por cedula \n"
                     + "8. presione 10 para salir \n"
+                    + "\n \n En caso de dudas, por favor leer el readme, ahi esta la explicacion del funcionamiento de cada metodo."
             ));
 
             switch (opc) {
                 case 1: {
                     club.crearSocio();
-                    System.out.println("");
                     break;
                 }
                 case 2: {
@@ -34,9 +34,8 @@ public class ppl {
                     club.crearConsumo();
                     break;
                 }
-
                 case 4: {
-                    
+                    club.eliminarConsumo();
                     break;
                 }
                 case 5: {
@@ -48,7 +47,8 @@ public class ppl {
                     break;
                 }
                 case 7: {
-                    
+                    //Falta por pruebas este metodo, de momento seguire con otras cosas.
+                    club.mostrarTodosConsumos();
                         break;
                 }
                 
