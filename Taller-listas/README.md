@@ -1,4 +1,4 @@
-## Getting Started
+## Club social implementando estructuras tipo lista
 
 El proposito de este documento es facilitar el ingreso de datos, resolver dudas, explicar de cierta forma el funcionamiento de este proyecto.
 
@@ -40,11 +40,3 @@ Ademas, si se ingresan mal los datos tomando en cuenta los limites, el ingreso d
 ## Opcion 7: Buscar consumo por cedula
 
 - No hay nada a destacar.
-
-Meanwhile, the compiled output files will be generated in the `bin` folder by default.
-
-> If you want to customize the folder structure, open `.vscode/settings.json` and update the related settings there.
-
-## Dependency Management
-
-The `JAVA PROJECTS` view allows you to manage your dependencies. More details can be found [here](https://github.com/microsoft/vscode-java-dependency#manage-dependencies).
