@@ -88,48 +88,50 @@ public class ListaSimpleSocios {
 
     public void eliminarDelInicio() {
         if (!listaVacia()) {
-            if(inicio==fin) {
+            if(inicio==fin ){
                 inicio = fin = null;
+            } else {
+                inicio = inicio.getSiguiente();
             }
-            inicio=inicio.getSiguiente();
         }
     }
     
     public void eliminarDelFinal() {
         if(!listaVacia()) {
-            //Si solo existe un dato, entonces:
             if(inicio == fin) {
                 inicio = fin = null;
             } else { // Si existen mas de 1 dato, entonces:
                 NodoSimple aux = inicio;
-                while(aux.getSiguiente() != fin)  { // Mientras el siguiente del "aux" sea distinto de fin, entonces ir avanzando de posicion.
+                while(aux.getSiguiente() != null && aux.getSiguiente().getSocio().getCedula() != fin.getSocio().getCedula())  { 
                     aux=aux.getSiguiente();
                 }
                     fin=aux;
                     fin.setSiguiente(null);
-                ;
+                
             }
         }
     }
 
     public void eliminar (Socios socio) {
         if(!listaVacia()) {
-            if(socio == inicio.getSocio()) {
+            if(socio.getCedula() == inicio.getSocio().getCedula()) {
+                System.out.println("al inicio");
                 eliminarDelInicio();
-            } else if (socio==fin.getSocio()) {
+            } else if (socio.getCedula()==fin.getSocio().getCedula()) {
+                System.out.println("al final");
                 eliminarDelFinal();
             } else {
-                NodoSimple aux = inicio;
 
-                while(aux.getSiguiente() != null && aux.getSiguiente().getSocio()!=socio) {
+                System.out.println("al medio");
+
+                NodoSimple aux = inicio;
+                while(aux.getSiguiente() != null && aux.getSiguiente().getSocio().getCedula() != socio.getCedula()) {
                     aux=aux.getSiguiente();
                 }
                 if(aux!=fin) {
                     NodoSimple eliminado = aux.getSiguiente();
                     aux.setSiguiente(eliminado.getSiguiente());
                 }
-                NodoSimple eliminado = aux.getSiguiente();
-                aux.setSiguiente(eliminado.getSiguiente());
             }
         }
     }

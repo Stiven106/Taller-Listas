@@ -51,10 +51,13 @@ public class ListaCircularConsumos {
         }
     }
 
-    public void eliminar(String cedula, String concepto) {
+    public double eliminar(String cedula, String concepto) {
+        double valor = 0.0;
         if(!listaVacia()) {
             if(entrada.getConsumo().getCedula().equals(cedula) && entrada.getConsumo().getConcepto().equals(concepto)) {
+                valor = entrada.getConsumo().getValor();
                 eliminarDeEntrada();
+                JOptionPane.showMessageDialog(null, "Factura pagada con exito. ");
             } else {
                 NodoSimple aux = entrada;
                 while (aux.getSiguiente().getConsumo().getCedula() != cedula 
@@ -62,8 +65,10 @@ public class ListaCircularConsumos {
                     aux = aux.getSiguiente();
                 }
                 if(aux!=entrada){
+                    valor = entrada.getConsumo().getValor();
                     NodoSimple eliminado = aux.getSiguiente();
                     aux.setSiguiente(eliminado.getSiguiente());
+                    JOptionPane.showMessageDialog(null, "Factura pagada con exito. ");
                 } else {
                     JOptionPane.showMessageDialog(null, "No se encontro el consumo que desea eliminar. "
                     + "\nPor favor verique que la cedula o concepto ingresada sea la correcta.");
@@ -71,9 +76,34 @@ public class ListaCircularConsumos {
                 
             }
         }
+
+        return valor;
     }
 
-    public int buscarConsumos(String cedula) {
+    public Consumos buscarConsumo (String cedula, String concepto) {
+        NodoSimple aux = null;
+        Consumos encontrado = null;
+
+        if (!listaVacia()) {
+            if (entrada.getConsumo().getCedula().equals(cedula) && entrada.getConsumo().getConcepto().equals(concepto)) {
+                encontrado = entrada.getConsumo();
+            } else if (entrada.getSiguiente() != null) {
+                    aux = entrada.getSiguiente();
+                    while (aux!=null && aux != entrada) {
+                        if (aux.getConsumo().getCedula().equals(cedula) && aux.getConsumo().getConcepto().equals(concepto)) {
+                            encontrado = aux.getConsumo();
+                            aux = aux.getSiguiente();
+                        } else {
+                            aux = aux.getSiguiente();
+                        }
+                    }
+            }
+        }
+
+        return encontrado;
+    }
+
+    public int imprimirConsumos(String cedula) {
         NodoSimple aux = null;
         Consumos encontrado = null;
         int contador = 0;
@@ -83,8 +113,8 @@ public class ListaCircularConsumos {
                 encontrado = entrada.getConsumo();
                 JOptionPane.showMessageDialog(null, 
                 "Nombre del que realizo el consumo: " + encontrado.getNombre()+ 
-                "Concepto de la factura: " + encontrado.getConcepto() + 
-                "Valor de la factura: " + encontrado.getValor());
+                "\nConcepto de la factura: " + encontrado.getConcepto() + 
+                "\nValor de la factura: " + encontrado.getValor());
                 contador = (contador + 1);
             } else if (entrada.getSiguiente() != null) {
                     aux = entrada.getSiguiente();

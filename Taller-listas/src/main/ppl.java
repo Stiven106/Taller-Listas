@@ -39,21 +39,22 @@ public class ppl {
                     break;
                 }
                 case 5: {
-                    club.ingresoFondos();
+                    String cedula =  JOptionPane.showInputDialog("Ingrese la cedula del socio para ingresar nuevos fondos.");
+                    club.ingresoFondos(cedula);
                     break;
                 }
                 case 6: {
-                    club.eliminarSocio();
+                    String cedula =  JOptionPane.showInputDialog("Ingrese la cedula del socio que quiere eliminar del sistema.");
+                    JOptionPane.showMessageDialog(null, "Socio eliminado: " + club.eliminarSocio(cedula) );
                     break;
                 }
                 case 7: {
-                    //Falta por pruebas este metodo, de momento seguire con otras cosas.
                     club.mostrarTodosConsumos();
                         break;
                 }
                 
             }
-        } while (opc != 7);
+        } while (opc != 8);
 
 
     }

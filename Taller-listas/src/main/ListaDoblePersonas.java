@@ -58,15 +58,10 @@ public class ListaDoblePersonas {
         NodoDoble aux = null;
         NodoDoble encontrado = null;
 
-        //Miramos que la lista no este vacia:
         if (!listaVacia()) {
-            //Comparamos que la persona del inicio no sea el repetido:
             if (inicio.getPersona().getCedula().equals(cedula)) {
-                System.out.println("entro en ListaDoblePersonas: !listaVacia:if(encontrado=inicio)");
                 encontrado = inicio;
             } else {
-                //Si el socio del inicio no es igual a la cedula repetida, entonces que se ejecute este else
-                //Decimos que aux va a ser igual a el siguiente socio de la lista
                 if(inicio.getSiguiente() != null) {
                     aux = inicio.getSiguiente();
                     while (aux != inicio ) {
@@ -78,7 +73,6 @@ public class ListaDoblePersonas {
                         }
                     }
                 }
-                 //Mientras que aux sea diferente del inicio, lo cual es true, entonces va ir recorriendo todos los socios hasta encontrar el repetido o finalizar.
                     
             }
         }
@@ -149,14 +143,6 @@ public class ListaDoblePersonas {
     }
 
     
-
-    //Buscar personas y personas autorizadas: Este metodo si me va servir, no se si para personas solamente o para socios tambien.
-    /*Nota:Esto todavia no esta funcional, por ejemplo, se deberia cambiar todo lo referente a socios por personas.
-    Y creo que este mismo metodo de pronto podria funcionar para buscar tanto socios como personas, tal vez eligiendo en vez de unicamente
-    personas poner un tipo object y ver como se manejaria, no se si es posible, pero estaria bueno mirar luego... */
-    
-
-    //Metodo de ordenar de menor a mayor: No se si me sirva para este proyecto, pero por aca lo dejo :v
     public void ordenar() {
         if(!listaVacia()) {
             NodoDoble aux1=inicio;

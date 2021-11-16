@@ -73,17 +73,6 @@ public class Club {
         //Ingreso de fondos segun la opcion elegida (vip o regular)
         double fondos = 0.0;
 
-        if (tipoSuscripcion == "VIP") {
-            fondos = Double.parseDouble(JOptionPane.showInputDialog("Por favor ingrese fondos *obligatorio* \n Recuerde: \n"+
-            "Como socio VIP debe ingresar un monto no inferior a 100.000 y no mayor a 5.000.000."));
-        } else if (tipoSuscripcion == "Regular") {
-            fondos = Double.parseDouble(JOptionPane.showInputDialog("Por favor ingrese fondos *obligatorio* \n Recuerde: \n"+
-            "Como socio regular debe ingresar un monto no inferior a 50.000 y no mayor a 1.000.000."));
-        } else {
-            JOptionPane.showMessageDialog(null, "Fallo al ingresar los fondos, verifique por favor que el monto sea el correcto y vuelva a intentarlo. \n No se logro la afiliacion");
-            return;
-        }
-
         //Cedula no repetir
         if (buscarCedula(cedula) == null && buscarCedulaPersona(cedula) == null) {
             Socios socioNuevo = new Socios(nombre, cedula, tipoSuscripcion, fondos);
@@ -91,7 +80,11 @@ public class Club {
             JOptionPane.showMessageDialog(null, "El socio " + tipoSuscripcion + " ha sido creado con exito!!.");
         } else {
             JOptionPane.showMessageDialog(null, "Fallo al afiliar un socio: La cedula ingresada ya existe en nuestra base de datos. ");
+            return;
         }
+
+        ingresoFondos(cedula);
+
     }
 
     public void crearPersona () {
@@ -112,35 +105,38 @@ public class Club {
             }
     }
 
-    public void ingresoFondos() {
-        String cedula =  JOptionPane.showInputDialog("Ingrese la cedula del socio para ingresar nuevos fondos.");
-        double ingresoValor =  Double.parseDouble(JOptionPane.showInputDialog("Digite el monto a ingresar a la cuenta."));
+    public void ingresoFondos(String cedula) {
         
         //Variables nulas para trabajar
         Socios socio = null;
+        boolean ingresado = false;
 
-        if (buscarCedula(cedula) != null) {
-            socio = buscarCedula(cedula);
-            if(socio.getTipoSuscripcion() == "VIP") {
-                if(ingresoValor+socio.getFondos() < 5000000) {
-                    buscarCedula(cedula).setFondos(socio.getFondos()+ingresoValor);
-                    JOptionPane.showMessageDialog(null, "El consumo del afiliado con nombre:  '" + socio.getNombre() 
-                    + "' ha sido realizado con exito!!."
-                    + "\nFondos actuales:" + socio.getFondos());
+        while (ingresado == false) {
+            System.out.println("se ejecuta esto");
+            double ingresoValor =  Double.parseDouble(JOptionPane.showInputDialog("Digite el monto a ingresar a la cuenta."));
+            if (buscarCedula(cedula) != null) {
+                socio = buscarCedula(cedula);
+                if(socio.getTipoSuscripcion().equals("VIP") && ingresoValor+socio.getFondos() >= 100000 && ingresoValor+socio.getFondos() <= 5000000) {
+                        buscarCedula(cedula).setFondos(socio.getFondos()+ingresoValor);
+                        JOptionPane.showMessageDialog(null, "El consumo del afiliado con nombre:  '" + socio.getNombre() 
+                        + "' ha sido realizado con exito!!."
+                        + "\nFondos actuales:" + socio.getFondos());
+                        ingresado = true;
+                } else if ( socio.getTipoSuscripcion().equals("Regular") && ingresoValor+socio.getFondos() >= 50000 && ingresoValor+socio.getFondos() <= 1000000) {
+                        buscarCedula(cedula).setFondos(socio.getFondos()+ingresoValor);
+                        JOptionPane.showMessageDialog(null, "El consumo del afiliado con nombre:  '" + socio.getNombre() 
+                        + "'' ha sido realizado con exito!!."
+                        + "\nFondos actuales:" + socio.getFondos());
+                        ingresado = true;
+                } else {
+                    JOptionPane.showMessageDialog(null, "Error al ingresar fondos. \nVerique no sobrepasar los limites: \n" 
+                    + "No mayor a: 5.000.000 Para socios VIP \n1.000.000 Para socios regulares."
+                    + "No menor a: 100.000 Para VIP \n50.000 Para socios regulares");
+                    ingresado = false;
                 }
-            } else if ( socio.getTipoSuscripcion() == "Regular") {
-                if (ingresoValor+socio.getFondos() < 1000000) {
-                    buscarCedula(cedula).setFondos(socio.getFondos()+ingresoValor);
-                    JOptionPane.showMessageDialog(null, "El consumo del afiliado con nombre:  '" + socio.getNombre() 
-                    + "'' ha sido realizado con exito!!."
-                    + "\nFondos actuales:" + socio.getFondos());
-                }
-            } else {
-                JOptionPane.showMessageDialog(null, "Error al ingresar fondos. \nVerique no sobrepasar el limite: \n" 
-                + "5.000.000 Para socios VIP \n1.000.000 Para socios regulares.");
             }
-        } 
-
+        }
+        
     }
 
     public Socios buscarCedula(String cedula) {
@@ -161,20 +157,11 @@ public class Club {
         return encontrado;
     }
 
-    public String mostrarTodosConsumos () {
-        String cedula =  JOptionPane.showInputDialog("Ingrese la cedula del socio/persona que quiere consultar por facturas pendientes.");
-        int numFacturasPendientes = consumos.buscarConsumos(cedula);
-        if (numFacturasPendientes >= 1 ) {
-            JOptionPane.showMessageDialog(null, "El total de facturas pendientes es: " + numFacturasPendientes);
-        } else {
-            JOptionPane.showMessageDialog(null, "El socio al cual realizo la busqueda no cuenta con consumos realizados.");
-        }
-        return cedula;
-    }
+    
 
-    public void eliminarSocio () {
+    public boolean eliminarSocio (String cedula) {
+        boolean eliminado = false;
         Socios socio = null;
-        String cedula =  JOptionPane.showInputDialog("Ingrese la cedula del socio que quiere eliminar del sistema.");
         if (buscarCedula(cedula) != null) {
             socio = buscarCedula(cedula);
             if(socio.getTipoSuscripcion() == "VIP") {
@@ -182,21 +169,48 @@ public class Club {
             } else if ( socio.getTipoSuscripcion() == "Regular") {
                 if(consumos.listaVacia()) {
                     socios.eliminar(socio);
+                    eliminado = true;
+                } else {
+                    JOptionPane.showMessageDialog(null, "Socio tiene pagos pendientes, por tanto no se pudo eliminar.\n Pague los consumos primero y vuelva a intentar.");
                 }
-            } else {
-                JOptionPane.showMessageDialog(null, "No se encontro el socio que desea eliminar. Por favor verique que la cedula ingresada sea la correcta.");
-            }
-        } 
+            } 
+        } else {
+            JOptionPane.showMessageDialog(null, "No se encontro el socio que desea eliminar. Por favor verique que la cedula ingresada sea la correcta.");
+        }
+
+        return eliminado;
     }
 
     public void eliminarConsumo () {
         //Mostrar consumos por cedula
         String cedula = mostrarTodosConsumos();
-        consumos.buscarConsumos(cedula);
+        double descontar = 0.0;
+        String concepto = JOptionPane.showInputDialog("Ingrese el concepto de la factura que desee eliminar.");
 
-        //Empezamos a construir el metodo para eliminar consumo
-        String concepto =JOptionPane.showInputDialog("Ingrese el concepto de la factura que desee eliminar.");
-       consumos.eliminar(cedula, concepto);
+        if (buscarCedula(cedula) != null) {
+            Socios socio = buscarCedula(cedula);
+            Consumos consumo = consumos.buscarConsumo(cedula, concepto);
+            if (socio.getFondos() >= consumo.getValor()) {
+                socio.setFondos(socio.getFondos() - consumo.getValor());
+                consumos.eliminar(cedula, concepto);
+            }
+            socio.setFondos(socio.getFondos()-descontar);
+
+        }
+
     }
 
+    public String mostrarTodosConsumos () {
+        //Este metodo solo imprime las facturas o consumos con sus respectivos datos
+        // y devuelve la cedula del socio para poder utilizarse en eliminarConsumo().
+        String cedula =  JOptionPane.showInputDialog("Ingrese la cedula del socio que quiere consultar por facturas pendientes.");
+        int numFacturasPendientes = consumos.imprimirConsumos(cedula);
+        if (numFacturasPendientes >= 1 ) {
+            JOptionPane.showMessageDialog(null, "El total de facturas pendientes es: " + numFacturasPendientes);
+        } else {
+            JOptionPane.showMessageDialog(null, "El socio al cual realizo la busqueda no cuenta con consumos realizados.");
+        }
+        return cedula;
+    }
 }
+
